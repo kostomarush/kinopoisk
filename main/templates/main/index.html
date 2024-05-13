@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{%block title%}{% endblock %}</title>
+    <link href="{% static 'user/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <img src="{% static 'user/img/radar.png' %}" class="bi me-2" width="55" height="53" role="img" aria-label="Radar">
+        <h1 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"><a class="nav-link text-dark" href="{% url 'home'%}">Shark</a></h1>
+      <ul class="nav nav-pills">
+          {% url 'home' as url_home%}
+          {% url 'tables' as url_tables%}
+          {% url 'scaner' as url_scaner%}
+        <li class="nav-item"><a aria-current="page" class="nav-link {% if url_home == request.path%}active {%endif%}" href="{{url_home}}">Личный кабинет</a></li>
+        <li class="nav-item"><a aria-current="page" class="nav-link {% if url_scaner == request.path%}active {%endif%}" href="{{url_scaner}}">Сканер сети</a></li>
+        <li class="nav-item"><a aria-current="page" class="nav-link {% if url_tables == request.path%}active {%endif%}" href="{{url_tables}}">Редактирование таблицы</a></li>
+          {% if request.user.is_superuser %}
+        <li class="nav-item"><a aria-current="page" class="btn btn-outline-success" href="/admin">Режим админа</a></li>
+            {% endif %}
+
+          <span class="nav-link text-dark">
+          {% if request.user.is_authenticated %}
+            Привет {{ request.user.username }},
+            <a href="{% url 'logout' %}">Выйти</a>
+        {% else %}
+            <a href="{% url 'login' %}">Войти</a>
+        {% endif %}
+    {% endif %}
+          </span>
+      </ul>
+    </header>
+</div>
+{% block content %}
+{% endblock %}
+</body>
