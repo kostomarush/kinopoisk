@@ -1,0 +1,38 @@
+{% extends 'main/index.html' %}
+{% load static %}
+{% block title %}Редактирование таблицы{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="form-control">
+        <div class="d-flex justify-content-center justify-content-md-between py-3">
+            <h4>Данные</h4>
+            <a href="{% url 'new_form' %}">
+                <div class="text-center">
+                    <button class="btn btn-dark">Добавить данные</button>
+                </div>
+            </a>
+        </div>
+
+        <table class="table table-striped text-center">
+            <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Дата создания</th>
+                <th>Название</th>
+                <th>Редактирвание</th>
+                <th>Удаление</th>
+            </tr>
+            </thead>
+            {% for i in data %}
+            <tr>
+                <th>{{i.id}}</th>
+                <th>{{i.data_create}}</th>
+                <th>{{i.name}}</th>
+                <th><a href="{% url 'update' i.id %}">Редактирвать</a></th>
+                <th><a href="{% url 'delete' i.id %}">Удалить</a></th>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endblock %}

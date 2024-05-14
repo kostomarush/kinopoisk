@@ -4,36 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <title>{%block title%}{% endblock %}</title>
-    <link href="{% static 'user/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'main/css/boostrap.min.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <img src="{% static 'user/img/radar.png' %}" class="bi me-2" width="55" height="53" role="img" aria-label="Radar">
-        <h1 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"><a class="nav-link text-dark" href="{% url 'home'%}">Shark</a></h1>
+        <h1>KinoPoisk</h1>
       <ul class="nav nav-pills">
-          {% url 'home' as url_home%}
-          {% url 'tables' as url_tables%}
-          {% url 'scaner' as url_scaner%}
-        <li class="nav-item"><a aria-current="page" class="nav-link {% if url_home == request.path%}active {%endif%}" href="{{url_home}}">Личный кабинет</a></li>
-        <li class="nav-item"><a aria-current="page" class="nav-link {% if url_scaner == request.path%}active {%endif%}" href="{{url_scaner}}">Сканер сети</a></li>
-        <li class="nav-item"><a aria-current="page" class="nav-link {% if url_tables == request.path%}active {%endif%}" href="{{url_tables}}">Редактирование таблицы</a></li>
-          {% if request.user.is_superuser %}
+          {% url 'index' as url_home%}
+          {% url 'acters' as url_acters%} 
+        <li class="nav-item"><a aria-current="page" class="nav-link {% if url_home == request.path%}active {%endif%}" href="#">Личный кабинет</a></li>
+        <li class="nav-item"><a aria-current="page" class="nav-link {% if url_acters == request.path%}active {%endif%}" href="{{acters}}">Редактирование таблицы</a></li>
         <li class="nav-item"><a aria-current="page" class="btn btn-outline-success" href="/admin">Режим админа</a></li>
-            {% endif %}
 
           <span class="nav-link text-dark">
-          {% if request.user.is_authenticated %}
-            Привет {{ request.user.username }},
-            <a href="{% url 'logout' %}">Выйти</a>
-        {% else %}
-            <a href="{% url 'login' %}">Войти</a>
-        {% endif %}
-    {% endif %}
+
           </span>
       </ul>
     </header>
 </div>
 {% block content %}
+
+<table class="table  text-center">
+  <thead class="table-dark">
+  <tr>
+
+      <th>Фильм</th>
+      <th>Актеры</th>
+      <th>Редактирвание</th>
+      <th>Удаление</th>
+  </tr>
+  </thead>
+  {% for i in films %}
+  <tr>
+      <td>{{i.name}}</td>
+      <td>{% for tag in i.actors.all %} {{ tag.name|linebreaks }} {% endfor %} </td>
+      <th><a href="{% url 'update' i.id %}">Редактирвать</a></th>
+      <th><a class="btn btn-danger" href="{% url 'remove_film' i.id %}">Удалить</a></th>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+
+
 {% endblock %}
 </body>
