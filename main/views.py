@@ -1,13 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Acters, KinoFilms, InfoActers
 from django.views.generic import UpdateView
-from .forms import NewForm, NewForm_films, NewActorForm
-from django.http import HttpResponseNotFound
+from .forms import NewForm, NewForm_films, NewActorForm, NewInfoActorForm
+
+from django.core.exceptions import ObjectDoesNotExist
 
 
-
-def error_404(request, exception):
-    return HttpResponseNotFound("Sorry, the page you are looking for does not exist.")
 
 
 def index(request):
@@ -88,10 +86,68 @@ def remove_film(request, pk):
 
 def info_acter(request, pk):
 
-    all_info = get_object_or_404(InfoActers, pk=pk)
+    try:
 
+        all_info = InfoActers.objects.get(pk=pk)
 
+        data = {
+
+            'all_info': all_info,
+
+        }
+
+        return render(request, 'main/info_acters.html', data)
+    
+    except ObjectDoesNotExist:
+
+        all_actors = Acters.objects.all()
+
+        error = ''
+        if request.method == 'POST':
+            form = NewActorForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('acters')
+            else:
+                error = 'Форма не верна'
+
+        form = NewActorForm()
+
+        alert_message = "Отсутствует описание данного актера"
+
+        data = {
+
+            'all_actors': all_actors,
+            'form': form,
+            'error': error,
+            'alert_message': alert_message,
+
+        }
+        
+
+        return render(request, 'main/acters.html', data)
+
+def add_info_acter(request):
+
+    error = ''
+    if request.method == 'POST':
+        form = NewInfoActorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('acters')
+        else:
+            error = 'Форма не верна'
+            
+    form = NewInfoActorForm()
     data = {
-        'all_info': all_info,
+        'form': form,
+        'error': error,
+
     }
-    return render(request, 'main/info_acters.html', data)
+    return render(request, 'main/add_info_acter.html', data)
+
+
+def remove_info(request, pk):
+    item = Acters.objects.get(pk=pk)
+    item.delete()
+    return redirect('acters')

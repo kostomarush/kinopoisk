@@ -1,0 +1,25 @@
+{% extends 'main/index.html' %}
+
+{% load extra_filters %}
+
+{% block title %}Добавление или изменение данных{% endblock %}
+{% block content %}
+<div class="container h4 mb-3 p-3" >
+    <h1>Добавление описания</h1>
+    {% if form.errors %}
+    <p class="text-danger">
+        Ваши вводимые данные некорректны.
+        Пожалуйста, попробуйте снова.
+    </p>
+    {% else %}
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.gender|addclass:"form-control mb-2" }}
+        {{ form.birthday|addclass:"form-control mb-2" }}
+        {{ form.city|addclass:"form-control mb-2" }}
+        {{ form.acter|addclass:"form-control mb-2" }}
+        <button type="submit" class="btn btn-success">Добавить</button>
+    </form>
+</div>
+{% endblock %}

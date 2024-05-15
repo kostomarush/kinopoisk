@@ -48,13 +48,13 @@ class NewInfoActorForm(forms.ModelForm):
             ]
 
         widgets = {
-            'name': forms.TextInput(attrs={
+            'acter': forms.Select(attrs={
                 'placeholder': 'Имя актера', 
             }),
             'gender': forms.Select(choices=GENDERS),
 
             'birthday': forms.DateInput(attrs={
-                'placeholder': 'Дата Рождения: 01.01.2001'}),
+                'placeholder': 'Дата Рождения: yyyy-mm-dd'}),
 
             'city': forms.Select()
             }

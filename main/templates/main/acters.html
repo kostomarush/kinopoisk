@@ -15,8 +15,9 @@
       <form method="post">
         {% csrf_token %} {{ form.name|addclass:"form-control mb-2" }}
         <button type="submit" class="btn btn-success">Добавить</button>
-        <button type="submit" class="btn btn-outline-info">Добавить описание</button>
       </form>
+      <br>
+      <a type="submit" class="btn btn-outline-info" href="{% url 'add_info_acter'%}">Добавить описание актера</a>
     </div>
   </div>
   <div class="container">
@@ -32,7 +33,7 @@
     <tr>
       <td>{{i.name}}</td>
       <td><a class="btn btn-outline-success" href="{% url 'info_acters' i.id %}">Описание</a></td>
-      <td><a class="btn btn-outline-danger" href="{% url 'remove_film' i.id %}">Удалить</a></td>
+      <td><a class="btn btn-outline-danger" href="{% url 'remove_info' i.id %}">Удалить</a></td>
       
     </tr>
     {% endfor %}

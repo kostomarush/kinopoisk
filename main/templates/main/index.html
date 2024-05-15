@@ -7,6 +7,17 @@
     <title>{%block title%}{% endblock %}</title>
     <link href="{% static 'main/css/boostrap.min.css' %}" rel="stylesheet" type="text/css">
 </head>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      // Получение alert-сообщения из контекста Django
+      var alertMessage = "{{ alert_message }}";
+
+      // Если сообщение не пустое, отображаем его
+      if (alertMessage) {
+          alert(alertMessage);
+      }
+  });
+</script>
 <body>
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
@@ -27,7 +38,6 @@
     </header>
 </div>
 {% block content %}
-
 <div class="container justify-content-md-between py-2 mb-2">
   <a class="btn btn-warning" href="{% url 'add_film'%}">Добавить фильм</a>
 </div>
