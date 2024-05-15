@@ -1,0 +1,22 @@
+{% extends 'main/index.html' %} 
+{% load static %} 
+{% load extra_filters %} 
+{%block title %}Описание актера: {{all_info.acter.name}}{% endblock %} 
+{% block content %}
+
+<div class="container justify-content-md-between py-2 mb-2">
+    <div class="container h4 mb-3 p-3">
+        <h1>{{all_info.acter.name}}</h1>
+        <br>
+        <h2>Информация:</h2>
+        <h4>Дата Рождения: {{all_info.birthday}}</h4>
+        <h4>Город: {{all_info.city}}</h4>
+        <h4>Пол: {% if all_info.gender == "M" %}
+            Мужчина
+            {% else %}
+            Женщина
+            {% endif %}
+        </h4>
+
+
+{% endblock %}

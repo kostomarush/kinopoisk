@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
     
 class Acters(models.Model):
     name = models.CharField(max_length=100)
@@ -9,10 +9,13 @@ class Acters(models.Model):
 
 class KinoFilms(models.Model):
     name = models.CharField(max_length=100)
-    actors = models.ManyToManyField(Acters, blank=True, null=True)
+    actors = models.ManyToManyField(Acters, blank=True)
     
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('index')
     
 class City(models.Model):
     city = models.CharField(max_length=100)

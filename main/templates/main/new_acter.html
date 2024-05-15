@@ -5,7 +5,7 @@
 {% block title %}Добавление или изменение данных{% endblock %}
 {% block content %}
 <div class="container h4 mb-3 p-3" >
-    <h1>Добавление или удаление актеров</h1>
+    <h1>Добавление актера</h1>
     {% if form.errors %}
     <p class="text-danger">
         Ваши вводимые данные некорректны.
@@ -15,8 +15,9 @@
     {% endif %}
     <form method="post">
         {% csrf_token %}
+        {{ form.name|addclass:"form-control mb-2" }}
         {{ form.actors|addclass:"form-control mb-2" }}
-        <button type="submit" class="btn btn-dark">Добавить</button>
+        <button type="submit" class="btn btn-success">Добавить</button>
     </form>
 </div>
 {% endblock %}
